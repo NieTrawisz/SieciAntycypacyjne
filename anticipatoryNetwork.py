@@ -88,3 +88,23 @@ class AnticipatoryNetwork:
             for i in range(len(chain.nodes)-1):
                 print("U%i,%i"%(chain.nodes[i].id,chain.decisions[i]+1),end=' -> ')
             print("U%i,%i"%(chain.nodes[-1].id,chain.decisions[-1]+1))
+
+    def GetAdmissiblePathsBetweenNodeAndElementV(self,startNode,endNode,endDecision):
+        paths=[]
+        for chain in self.chains:
+            index=chain.nodes.index(endNode)
+            if chain.decisions[index]==endDecision:
+                chaincopy=Chain()
+                for i in range(len(chain.nodes)):
+                    chaincopy.addDecision(chain.nodes[i],chain.decisions[i])
+                start=chaincopy.nodes.index(startNode)
+                chaincopy.decisions[0:start-1]=-1
+                chaincopy.decisions[endNode+1:]=-1
+                new=True
+                for path in paths:
+                    if path.decisions==chaincopy.decisions:
+                        new=False
+                if new:
+                    paths.append(chaincopy)
+        return paths
+        
