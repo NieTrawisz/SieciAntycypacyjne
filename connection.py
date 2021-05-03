@@ -9,7 +9,14 @@ class Connection:
         self.endNode=endNode
         self.connections=connections
 
-    def isConnected(self,decision1,decision2):
+    def isConnected(self,decision1,decision2)->bool:
         return self.connections[decision1,decision2]==1
+
+    def getAllConnectedDecisions(self,decision)->list:
+        allConnected=[]
+        for i,con in enumerate(self.connections[decision,:]):
+            if con==1:
+                allConnected.append(i)
+        return allConnected
     
     
