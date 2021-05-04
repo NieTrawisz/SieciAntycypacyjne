@@ -15,7 +15,7 @@ class Chain:
     def createOptimalChain(self, startNode, endNode):
         decision_vals = []
         for i in range(startNode.criterion.shape):
-            posibble_decisions.append(np.array([i,startNode.getDecisionValue(i)]))
-        maxVal = np.max(posibble_decisions[:,0])
+            decision_vals.append(np.array([i,startNode.getDecisionValue(i)]))
+        maxVal = np.max(decision_vals[:,0])
         
         
