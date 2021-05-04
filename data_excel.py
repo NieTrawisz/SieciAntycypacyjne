@@ -3,7 +3,7 @@ from connection import *
 import pandas as pd
 
 def read_matrix_from_file(filename):
-    return pd.read_csv(filename, sep=",", delimiter=";", header=None).to_numpy()
+    return pd.read_csv(filename, sep=".", delimiter=";", header=None).to_numpy()
 
 import numpy as np
 class NodeFromFiles:
