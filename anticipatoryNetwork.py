@@ -1,5 +1,6 @@
 from chain import *
 from feedback import *
+from data_excel import *
 class AnticipatoryNetwork:
     def __init__(self,nodes:list):
         self.nodes=nodes

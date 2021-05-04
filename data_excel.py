@@ -10,7 +10,7 @@ class NodeFromFiles:
     ids=0
     def __init__(self,filename_criterion:str,filename_preference:str):
         self.criterion=read_matrix_from_file(filename_criterion)
-        self.preference=read_matrix_from_file(filename_preference)
+        self.preference=read_matrix_from_file(filename_preference)[NodeFromFiles.ids]
         self.id=NodeFromFiles.ids
         NodeFromFiles.ids+=1
 
