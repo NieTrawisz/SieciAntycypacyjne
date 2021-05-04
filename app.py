@@ -22,25 +22,25 @@ from anticipatoryNetwork import *
 # con.startNode.criterion[0,0]=1
 # print(node1.getDecision(0))
 
-node0 = NodeFromFiles('dane/kryt_U1.csv','dane/pref.csv')
-node1 = NodeFromFiles('dane/kryt_U2.csv','dane/pref.csv')
-node2 = NodeFromFiles('dane/kryt_U3.csv','dane/pref.csv')
-node3 = NodeFromFiles('dane/kryt_U4.csv','dane/pref.csv')
+node0 = NodeFromFiles('dane/kryt_U0.csv', 'dane/pref.csv', 0)
+node1 = NodeFromFiles('dane/kryt_U1.csv', 'dane/pref.csv', 1)
+node3 = NodeFromFiles('dane/kryt_U3.csv', 'dane/pref.csv', 3)
+node5 = NodeFromFiles('dane/kryt_U5.csv', 'dane/pref.csv', 5)
 
 conn01 = read_matrix_from_file('dane/U0_U1.csv')
-conn12 = read_matrix_from_file('dane/U1_U2.csv')
-conn23 = read_matrix_from_file('dane/U2_U3.csv')
+conn13 = read_matrix_from_file('dane/U1_U3.csv')
+conn35 = read_matrix_from_file('dane/U3_U5.csv')
 
 feed10 = read_matrix_from_file('dane/spr_zwrot.csv')[0]
-feed21 = read_matrix_from_file('dane/spr_zwrot.csv')[1]
-feed32 = read_matrix_from_file('dane/spr_zwrot.csv')[2]
+feed31 = read_matrix_from_file('dane/spr_zwrot.csv')[1]
+feed53 = read_matrix_from_file('dane/spr_zwrot.csv')[2]
 
-an = AnticipatoryNetwork([node0, node1, node2, node3])
+an = AnticipatoryNetwork([node0, node1, node3, node5])
 an.addConnection(node0, node1, conn01)
-an.addConnection(node1, node2, conn12)
-an.addConnection(node2, node3, conn23)
+an.addConnection(node1, node3, conn13)
+an.addConnection(node3, node5, conn35)
 an.addFeedback(node1, node0, feed10)
-an.addFeedback(node2, node1, feed21)
-an.addFeedback(node3, node2, feed32)
+an.addFeedback(node3, node1, feed31)
+an.addFeedback(node5, node3, feed53)
 an.CreateAdmissibleChains()
 an.DisplayChains()

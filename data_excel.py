@@ -3,16 +3,14 @@ from connection import *
 import pandas as pd
 
 def read_matrix_from_file(filename):
-    return pd.read_csv(filename, header=None).to_numpy()
+    return pd.read_csv(filename, sep=",", delimiter=";", header=None).to_numpy()
 
 import numpy as np
 class NodeFromFiles:
-    ids=0
-    def __init__(self,filename_criterion:str,filename_preference:str):
+    def __init__(self,filename_criterion:str,filename_preference:str, node_num:int):
         self.criterion=read_matrix_from_file(filename_criterion)
-        self.preference=read_matrix_from_file(filename_preference)[NodeFromFiles.ids]
-        self.id=NodeFromFiles.ids
-        NodeFromFiles.ids+=1
+        self.preference=read_matrix_from_file(filename_preference)[node_num]
+        self.id=node_num
 
     def getDecision(self,index)->np.ndarray:
         return self.criterion[index,:]
