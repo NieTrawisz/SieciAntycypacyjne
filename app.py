@@ -22,23 +22,25 @@ from anticipatoryNetwork import *
 # con.startNode.criterion[0,0]=1
 # print(node1.getDecision(0))
 
+node0 = NodeFromFiles('dane/kryt_U1.csv','dane/pref.csv')
+node1 = NodeFromFiles('dane/kryt_U2.csv','dane/pref.csv')
+node2 = NodeFromFiles('dane/kryt_U3.csv','dane/pref.csv')
+node3 = NodeFromFiles('dane/kryt_U4.csv','dane/pref.csv')
 
-node0 = Node(np.array([[3, 1, 3], [5, 2, 2], [5, 4, 5], [3, 5, 4], [
-             3, 4, 3], [5, 3, 5], [4, 5, 3]]), np.array([0.3, 0.2, 0.5]))
-node1 = Node(np.array([[4, 3, 2], [3, 3, 2], [4, 1, 5], [3, 3, 4], [2, 2, 2], [
-             4, 5, 1], [1, 4, 5], [3, 3, 1], [5, 5, 1]]), np.array([0.3, 0.2, 0.5]))
+conn01 = read_matrix_from_file('dane/U0_U1.csv')
+conn12 = read_matrix_from_file('dane/U1_U2.csv')
+conn23 = read_matrix_from_file('dane/U2_U3.csv')
 
-an = AnticipatoryNetwork([node0, node1])
-connections = np.array([[1, 0, 1, 1, 0, 0, 0, 1, 0], 
-                [1, 0, 1, 0, 1, 0, 0, 1, 0], 
-                [1, 1, 1, 0, 0, 0, 0, 0, 1], 
-                [1, 0, 1, 0, 1, 0, 1, 0, 0], 
-                [1, 0, 1, 1, 1, 1, 0, 1, 1],
-                [0, 1, 0, 0, 1, 1, 1, 0, 1], 
-                [1, 1, 0, 1, 0, 0, 1, 1, 1]])
-an.addConnection(node0, node1, connections)
-an.addFeedback(node1, node0, [1,2,3,4,5])
-# an.CreateAdmissibleChains()
-# an.DisplayChains()
-a = np.array([[1,2,3],[4,5,6]])
-print(np.max(a[:,0]))
+feed10 = read_matrix_from_file('dane/spr_zwrot.csv')[0]
+feed21 = read_matrix_from_file('dane/spr_zwrot.csv')[1]
+feed32 = read_matrix_from_file('dane/spr_zwrot.csv')[2]
+
+an = AnticipatoryNetwork([node0, node1, node2, node3])
+an.addConnection(node0, node1, conn01)
+an.addConnection(node1, node2, conn12)
+an.addConnection(node2, node3, conn23)
+an.addFeedback(node1, node0, feed10)
+an.addFeedback(node2, node1, feed21)
+an.addFeedback(node3, node2, feed32)
+an.CreateAdmissibleChains()
+an.DisplayChains()
