@@ -138,7 +138,38 @@ class AnticipatoryNetwork:
                 optimalChain = chain
         return optimalChain
 
-
+    def GetSumofTwoSetsOfChains(self,chainsA,chainsB):
+        firstA=chainsA[0].nodes
+        firstB=chainsB[0].nodes
+        newChains=[]
+        for chainA in chainsA:
+            for chainB in chainsB:
+                newChain=Chain()
+                if len(chainA.nodes)!=len(chainB.nodes):
+                    raise Exception("Invalid sets of chains")
+                goodToAdd=True
+                for k in range(len(chainA.nodes)):
+                    if firstA[k]==-1:
+                        if firstB[k]==-1:
+                            newChain.addDecision(chainA.nodes[k],-1)
+                        else:
+                            newChain.addDecision(chainA.nodes[k],chainB.decision[k])
+                    else:
+                        if firstB[k]==-1:
+                            newChain.addDecision(chainA.nodes[k],chainA.decision[k])
+                        else:
+                            if firstA[k]==firstB[k]:
+                                newChain.addDecision(chainA.nodes[k],chainA.decision[k])
+                            else:
+                                goodToAdd=False
+                                break
+                if goodToAdd:
+                    for chain in newChains:
+                        if chain.decisions==newChain.decisions:
+                            goodToAdd=False
+                    if goodToAdd:
+                        newChains.append(newChain)
+        return newChains
         
 
                 
